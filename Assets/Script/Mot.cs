@@ -13,6 +13,7 @@ public class Mot : MonoBehaviour
     public AudioClip[] a;
     public AudioSource aa;
     private string name;
+    int flag = 0;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class Mot : MonoBehaviour
     }
 
     
-    void FixedUpdate()
+    void Update()
     {
 
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
@@ -69,12 +70,13 @@ public class Mot : MonoBehaviour
             Destroy(col.gameObject);
             SceneManager.LoadScene(0);
         }
-        else if (name != col.name)
+        else if (name != col.name && flag==0)
         {
-            aa.PlayOneShot(a[1]);
-            
+
+            flag++;
             rb.velocity = Vector2.zero;
             FindObjectOfType<Mot>().enabled = false;
+            aa.PlayOneShot(a[1]);
             Invoke("nxt", 3f);
             
         }
